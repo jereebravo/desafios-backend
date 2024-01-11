@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "libro",
+    "description": "libro de harry potter",
+    "price": 230,
+    "thumbnail": "img-url",
+    "code": 233,
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "title": "libro",
+    "description": "libro de maquiavelico",
+    "price": 350,
+    "thumbnail": "img-url",
+    "code": 333,
+    "stock": 20
+  },
+  {
+    "id": 3,
+    "title": "libro",
+    "description": "libro de programacion",
+    "price": 330,
+    "thumbnail": "img-url",
+    "code": 433,
+    "stock": 6
+  },
+  {
+    "id": 4,
+    "title": "libro",
+    "description": "libro de el señor de los anillos",
+    "price": 500,
+    "thumbnail": "img-url",
+    "code": 533,
+    "stock": 7
+  },
+  {
+    "id": 5,
+    "title": "juguete",
+    "description": "barby",
+    "price": 500,
+    "thumbnail": "img-url",
+    "code": 633,
+    "stock": 13
+  },
+  {
+    "id": 6,
+    "title": "juguete",
+    "description": "max steel",
+    "price": 450,
+    "thumbnail": "img-url",
+    "code": 733,
+    "stock": 9
+  },
+  {
+    "id": 7,
+    "title": "juguete",
+    "description": "lego",
+    "price": 600,
+    "thumbnail": "img-url",
+    "code": 833,
+    "stock": 20
+  },
+  {
+    "id": 8,
+    "title": "teclado",
+    "description": "redragon kurama",
+    "price": 1000,
+    "thumbnail": "img-url",
+    "code": 933,
+    "stock": 7
+  },
+  {
+    "id": 9,
+    "title": "mouse",
+    "description": "logitech",
+    "price": 1500,
+    "thumbnail": "img-url",
+    "code": 1033,
+    "stock": 23
+  },
+  {
+    "id": 10,
+    "title": "monitor",
+    "description": "lg",
+    "price": 2500,
+    "thumbnail": "img-url",
+    "code": 1133,
+    "stock": 4
+  }
+]
