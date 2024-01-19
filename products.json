@@ -1,92 +1,112 @@
 [
   {
     "id": 1,
-    "title": "libro",
-    "description": "libro de harry potter",
-    "price": 230,
-    "thumbnail": "img-url",
+    "title": "max steel",
+    "description": "juguete max steel",
     "code": 233,
-    "stock": 10
+    "price": 300,
+    "stock": 20,
+    "category": "juguetes",
+    "status": true,
+    "thumbnail": []
   },
   {
     "id": 2,
-    "title": "libro",
-    "description": "libro de maquiavelico",
+    "title": "barby",
+    "description": "juguete barby",
+    "code": 133,
     "price": 350,
-    "thumbnail": "img-url",
-    "code": 333,
-    "stock": 20
+    "stock": 10,
+    "category": "juguetes",
+    "status": true,
+    "thumbnail": []
   },
   {
     "id": 3,
-    "title": "libro",
-    "description": "libro de programacion",
-    "price": 330,
-    "thumbnail": "img-url",
-    "code": 433,
-    "stock": 6
+    "title": "hot wheels",
+    "description": "Ferrary hot wheels",
+    "code": 333,
+    "price": 350,
+    "stock": 9,
+    "category": "juguetes",
+    "status": true,
+    "thumbnail": []
   },
   {
     "id": 4,
-    "title": "libro",
-    "description": "libro de el señor de los anillos",
-    "price": 500,
-    "thumbnail": "img-url",
+    "title": "hot wheels",
+    "description": "audi hot wheels",
     "code": 533,
-    "stock": 7
+    "price": 400,
+    "stock": 9,
+    "category": "juguetes",
+    "status": true,
+    "thumbnail": []
   },
   {
     "id": 5,
-    "title": "juguete",
-    "description": "barby",
-    "price": 500,
-    "thumbnail": "img-url",
-    "code": 633,
-    "stock": 13
+    "title": "oso gris",
+    "description": "peluche oso",
+    "code": 166,
+    "price": 250,
+    "stock": 9,
+    "category": "peluches",
+    "status": true,
+    "thumbnail": []
   },
   {
     "id": 6,
-    "title": "juguete",
-    "description": "max steel",
-    "price": 450,
-    "thumbnail": "img-url",
-    "code": 733,
-    "stock": 9
+    "title": "oso negro",
+    "description": "peluche oso",
+    "code": 266,
+    "price": 250,
+    "stock": 9,
+    "category": "peluches",
+    "status": true,
+    "thumbnail": []
   },
   {
     "id": 7,
-    "title": "juguete",
-    "description": "lego",
-    "price": 600,
-    "thumbnail": "img-url",
-    "code": 833,
-    "stock": 20
+    "title": "oso rojo",
+    "description": "peluche oso",
+    "code": 366,
+    "price": 300,
+    "stock": 7,
+    "category": "peluches",
+    "status": true,
+    "thumbnail": []
   },
   {
     "id": 8,
-    "title": "teclado",
-    "description": "redragon kurama",
-    "price": 1000,
-    "thumbnail": "img-url",
-    "code": 933,
-    "stock": 7
+    "title": "teclado redragon kurama",
+    "description": "teclado mecanico",
+    "code": 177,
+    "price": 700,
+    "stock": 4,
+    "category": "tencnologia",
+    "status": true,
+    "thumbnail": []
   },
   {
     "id": 9,
-    "title": "mouse",
-    "description": "logitech",
-    "price": 1500,
-    "thumbnail": "img-url",
-    "code": 1033,
-    "stock": 23
+    "title": "mouse logitech",
+    "description": "laser optico",
+    "code": 277,
+    "price": 600,
+    "stock": 5,
+    "category": "tencnologia",
+    "status": true,
+    "thumbnail": []
   },
   {
     "id": 10,
-    "title": "monitor",
-    "description": "lg",
-    "price": 2500,
-    "thumbnail": "img-url",
-    "code": 1133,
-    "stock": 4
+    "title": "monitor lg",
+    "description": "19'",
+    "code": 377,
+    "price": 1000,
+    "stock": 5,
+    "category": "tencnologia",
+    "status": true,
+    "thumbnail": []
   }
 ]
