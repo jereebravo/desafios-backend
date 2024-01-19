@@ -40,28 +40,30 @@ class cartManager {
         const content = await fs.promises.readFile(this.path, 'utf-8');
         const carts = JSON.parse(content);
             //traigo los productos
-        const content2 = await fs.promises.readFile('./product.json' , 'utf-8');
+        const content2 = await fs.promises.readFile('./products.json' , 'utf-8');
         const products = JSON.parse(content2);
 
            //Busco el carrito correspondiente segun el id
          const cartIndex = carts.findIndex((cart) => cart.id === id);
          //busco el producto correspondiente segun el id
          const product = products.find((product) => product.id === prodId);
+         console.log(product);
 
 
          if(cartIndex !== -1){
             const cart = carts[cartIndex];
 
-            const ProductExists = cart.products.findIndex((product) => product.id === id);
+            const ProductExists = cart.products.findIndex((product) => product.id === prodId);
 
             if(ProductExists !== -1) {
                 cart.products[ProductExists].quantity += 1;
             }
             else{
-                cart.products.push({
-                    id: product,
+                const newProd = {
+                    id: product.id,
                     quantity: 1
-                })
+                }
+                cart.products.push(newProd);
             }
 
             await fs.promises.writeFile(this.path , JSON.stringify(carts, null, 2),  'utf-8');

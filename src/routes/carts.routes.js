@@ -42,4 +42,24 @@ routerCart.get('/:cid' , async (req , res) =>{
     }
 })
 
+routerCart.post('/:cid/product/:pid' , async (req , res) => {
+    const cartId = req.params.cid;
+    const prodId = parseInt(req.params.pid);
+
+    try{
+        const addProductCart = await cart.addProducCart(cartId , prodId);
+
+        if(addProductCart){
+            res.status(200).send(`Se agrego el producto con id: ${prodId} , al carrito con id: ${cartId} `)
+        }else{
+            res.status(400).send('No se pudo agregar el producto al carrito');
+
+        }
+
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
 module.exports = routerCart;

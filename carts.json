@@ -1,10 +1,28 @@
 [
   {
     "id": "29f478ff-cfce-4d51-889c-5c4d72192e30",
-    "products": []
+    "products": [
+      {
+        "id": 2,
+        "quantity": 2
+      },
+      {
+        "id": 4,
+        "quantity": 2
+      }
+    ]
   },
   {
     "id": "8ec33ae9-391e-4d91-9e11-f87c87473f16",
-    "products": []
+    "products": [
+      {
+        "id": 4,
+        "quantity": 1
+      },
+      {
+        "id": 8,
+        "quantity": 1
+      }
+    ]
   }
 ]
