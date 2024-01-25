@@ -2,7 +2,7 @@ const fs = require("fs");
 
 class ProductManager {
   constructor() {
-    this.path = "./products.json";
+    this.path = "./src/products.json";
     this.products = [];
   }
 
@@ -139,7 +139,8 @@ const product = new ProductManager();
 
 //product.updateProduct(1 , {price: 300});
 
-//product.getProductsFs();
+//console.log(product.getProductsFs());
+
 
 //product.getProductsById(2);
 

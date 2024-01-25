@@ -5,7 +5,7 @@ const id = uuid4();
 
 class cartManager {
     constructor (){
-        this.path = './carts.json';
+        this.path = './src/carts.json';
         this.id = id;
     }
 
@@ -40,7 +40,7 @@ class cartManager {
         const content = await fs.promises.readFile(this.path, 'utf-8');
         const carts = JSON.parse(content);
             //traigo los productos
-        const content2 = await fs.promises.readFile('./products.json' , 'utf-8');
+        const content2 = await fs.promises.readFile('./src/products.json' , 'utf-8');
         const products = JSON.parse(content2);
 
            //Busco el carrito correspondiente segun el id

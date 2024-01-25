@@ -22,7 +22,24 @@
       {
         "id": 8,
         "quantity": 1
+      },
+      {
+        "id": 3,
+        "quantity": 2
       }
     ]
+  },
+  {
+    "id": "24a662ef-2427-452d-9071-7468f9f40024",
+    "products": [
+      {
+        "id": 3,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "06cb6254-73dc-4585-b999-fbbe97ddf71c",
+    "products": []
   }
 ]

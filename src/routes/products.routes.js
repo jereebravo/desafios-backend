@@ -2,7 +2,7 @@ const express = require('express');
 const { Router } = express;
 const routerProd = new Router();
 
-const ProductManager = require('../models/tercerDesafio');
+const ProductManager = require('../models/productManager');
 
 const products = new ProductManager();
 
