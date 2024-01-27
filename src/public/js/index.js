@@ -9,10 +9,13 @@ socket.on("mensaje-servidor" , (data) =>{
 })
 
 socket.on('products' , (data) =>{
+    console.log(data);
     renderProds(data);
 })
 
+
 const renderProds = (data) => {
+    console.log(data);
     const products = data.map(element => {
         return (`
         <li class="list-group-item"> <p class="propiedad">TITLE:</p> ${element.title}</li>
@@ -22,7 +25,5 @@ const renderProds = (data) => {
 
      document.querySelector('.list-group').innerHTML = products;
      return false
-
-
 
 }

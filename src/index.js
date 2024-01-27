@@ -11,14 +11,14 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 app.use(express.static(__dirname+'/public'))
 
-//traigo mi class products
-const productManager = require('../src/models/productManager')
-const product = new productManager();
+
+
 
 //importo mi ruta de productos
-const routerProd = require('./routes/products.routes')
-const routerCart = require('./routes/carts.routes')
-const routerView = require('./routes/home.routes');
+const { routerProd, socketProducts } = require('./routes/products.routes');
+const routerCart = require('./routes/carts.routes');
+
+
 
 
 
@@ -38,8 +38,9 @@ app.use(express.json());
 app.use('/api/products' , routerProd);
 //Routes de los carts
 app.use('/api/carts' , routerCart);
-//Routes de las vistas
-app.use('/home' ,  routerView);
+
+
+
 
 
 io.on('connection' , async (socket) => {
@@ -47,16 +48,16 @@ io.on('connection' , async (socket) => {
     socket.on('message' , (data) =>{
         console.log(data);
     })
-    const prods = await product.getProductsFs();
-    io.sockets.emit('products' , prods );
+  
+   
 })
 
 server.listen(port, ()=> {
     console.log('server run on port 8080');
 })
 
-
-
+//uso el appset para poder usar el socket en mis rutas
+socketProducts(io);
 
 
 

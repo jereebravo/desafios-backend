@@ -4,6 +4,19 @@ const routerProd = new Router();
 
 const ProductManager = require('../models/productManager');
 
+const socketProducts = async (io) =>{
+    io.on('connection' , async() =>{
+        const productos = await products.getProductsFs()
+        io.sockets.emit('products' , productos);
+
+       
+    })
+   
+
+}
+
+
+
 const products = new ProductManager();
 
 
@@ -21,6 +34,29 @@ routerProd.get('/' , async (req , res) => {
         console.log(err);
     }
 })
+
+routerProd.get('/home', async (req, res)=>{
+    try{
+        const productos = await products.getProductsFs()
+
+        res.render('home', { productos });
+    }
+    catch(err){
+        console.log(err);
+    }
+  })
+
+  routerProd.get('/realtimeproducts', async (req, res)=>{
+    try{
+        
+        res.render('realTimeProducts' , { });  
+        
+    }
+    catch(err){
+        console.log(err);
+    }
+  })
+
 
 routerProd.get('/:pid' , async (req , res) => {
     try{
@@ -97,5 +133,5 @@ routerProd.delete('/:pid' , async (req , res) => {
 
 
 
+module.exports = { routerProd, socketProducts };
 
-module.exports = routerProd;
