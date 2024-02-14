@@ -11,12 +11,15 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 app.use(express.static(__dirname+'/public'))
 
+//Traigo base de datos desde mongo
+const Database = require('./dao/db/index')
 
 
 
-//importo mi ruta de productos
+//importo mis rutas 
 const { routerProd, socketProducts } = require('./routes/products.routes');
 const routerCart = require('./routes/carts.routes');
+const {routerChat, socketChat} = require('./routes/chat.routes');
 
 
 
@@ -38,6 +41,8 @@ app.use(express.json());
 app.use('/api/products' , routerProd);
 //Routes de los carts
 app.use('/api/carts' , routerCart);
+//routes del chat
+app.use('/chat' , routerChat)
 
 
 
@@ -54,10 +59,14 @@ io.on('connection' , async (socket) => {
 
 server.listen(port, ()=> {
     console.log('server run on port 8080');
+    Database.connect()
 })
 
 //uso el appset para poder usar el socket en mis rutas
 socketProducts(io);
+socketChat(io);
+
+
 
 
 

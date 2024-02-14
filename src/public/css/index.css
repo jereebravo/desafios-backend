@@ -9,3 +9,12 @@
     font-weight: 700;
     font-size: 15px;
 }
+
+.contenedor{
+    width: 75vh;
+    padding: 10px;
+}
+
+#caja{
+    width: 100vh;
+}

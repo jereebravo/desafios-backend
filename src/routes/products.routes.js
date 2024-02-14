@@ -2,11 +2,16 @@ const express = require('express');
 const { Router } = express;
 const routerProd = new Router();
 
-const ProductManager = require('../models/productManager');
+/*
+const ProductManager = require('../dao/FileSystem/models/productManager');
+const products = new ProductManager();
+*/
+
+const ProductManagerMongo = require('../dao/db/ProductMongoManager')
 
 const socketProducts = async (io) =>{
     io.on('connection' , async() =>{
-        const productos = await products.getProductsFs()
+        const productos = await product.getProducts()
         io.sockets.emit('products' , productos);
 
        
@@ -16,19 +21,26 @@ const socketProducts = async (io) =>{
 }
 
 
+const product = new ProductManagerMongo;
 
-const products = new ProductManager();
 
 
 routerProd.get('/' , async (req , res) => {
     try{
-        const prods = await products.getProductsFs();
-        const limit = parseInt(req.query.limit);
+        const prods = await product.getProducts();
+        const limit = req.query.limit;
         const LimitPrds = prods.slice(0 , limit);
         if(limit){
-            res.status(200).send(LimitPrds);
-        }else{
-            res.send(prods);
+            res.status(200).send({
+                msg: "Productos",
+                data: LimitPrds
+            }
+               
+        )}else{
+            res.send({
+                msg: "Todos los Productos",
+                data: prods
+           });
         }
     }catch(err){
         console.log(err);
@@ -37,7 +49,7 @@ routerProd.get('/' , async (req , res) => {
 
 routerProd.get('/home', async (req, res)=>{
     try{
-        const productos = await products.getProductsFs()
+        const productos = await product.getProducts()
 
         res.render('home', { productos });
     }
@@ -60,11 +72,14 @@ routerProd.get('/home', async (req, res)=>{
 
 routerProd.get('/:pid' , async (req , res) => {
     try{
-        const prodId = parseInt(req.params.pid);
-        const product = await products.getProductsById(prodId);
+        const prodId = req.params.pid;
+        const producto = await product.getProductsById(prodId);
 
         if(product) {
-            res.status(200).send(product);
+            res.status(200).send({
+                msg:`Producto con id: ${prodId}`,
+                data: producto
+            });
         } else {
             res.status(404).send({error: 'Producto no encontrado'});
         } }catch(err){
@@ -76,12 +91,14 @@ routerProd.post('/' , async (req , res) =>{
     try{
         const prod = req.body;
   
-        const conf = await products.addProduct(prod);
+        const conf = await product.addProduct(prod);
         if(conf){
             res.status(201).send('Producto creado exitosamente');
         }
         else{
-            res.status(400).send('No se pudo crear el producto');
+            res.status(400).send({
+                msg: "no se pudo crear el producto"
+            });
         }
 
    
@@ -95,9 +112,9 @@ routerProd.post('/' , async (req , res) =>{
 
 routerProd.put('/:pid' , async (req , res) =>{
     try{
-        const id = parseInt(req.params.pid);
-        const conf = await products.updateProduct(id , req.body);
-        if(conf){
+        const id = req.params.pid;
+        const success = await product.updateProduct(id , req.body);
+        if(success){
             res.status(200).send(`Producto con id:${id} actualizado correctamente`);
         }
         else{
@@ -113,8 +130,8 @@ routerProd.put('/:pid' , async (req , res) =>{
 
 routerProd.delete('/:pid' , async (req , res) => {
     try{
-        const id = parseInt(req.params.pid);
-        const conf = await products.deleteProduct(id)
+        const id = req.params.pid;
+        const conf = await product.deleteProduct(id)
 
         if(conf){
             res.send(`Producto con id: ${id} eliminado correctamente`)
