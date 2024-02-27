@@ -1,21 +1,13 @@
 let socket = io();
 
-socket.emit('message' , "hola me estoy comunicando desde el cliente");
+//socket de la vista realtimeproducts
 
-console.log("estoy funcionando");
-
-socket.on("mensaje-servidor" , (data) =>{
-    console.log(data);
+//renderizar la lista
+socket.on("productos" , (data) => {
+  const products = data;
+  renderProds(products);
 })
-
-socket.on('products' , (data) =>{
-    //console.log(data);
-    renderProds(data);
-})
-
-
 const renderProds = (data) => {
-    console.log(data);
     const products = data.map(element => {
         return (`
         <li class="list-group-item"> <p class="propiedad">TITLE:</p> ${element.title}</li>
@@ -24,40 +16,88 @@ const renderProds = (data) => {
     }).join('');
 
      document.querySelector('.list-group').innerHTML = products;
-     return false
+     return false;
+     
+}
+
+//agregar un producto
+socket.on("addProd" , (data) => {
+  addProduct(data);
+
+})
+
+const addProduct = (data) => {
+    const title = JSON.parse(data.title);
+    const id = JSON.parse(data._id);
+
+    const productList = document.querySelector('.list-group');
+    
+    const product = document.createElement('li');
+    product.innerHTML= `
+    <p class="propiedad">ID:</p>${title}</li>
+    <p class="propiedad">ID:</p>${id}</li>
+    `
+
+    product.className = "list-group-item";
+
+    productList.appendChild(product);
+    return false;
+}
+
+//eliminar un producto
+socket.on("deletedProd" , (id) =>{
+    deleteProd(id);
+
+})
+
+const deleteProd = (id) => {
+const ID = id;
+
+const productElement = document.querySelector(`.list-group-item:contains"${ID}"`);
+
+if(productElement) {
+    productElement.remove();
+
+    console.log("Se elimino el producto con ID: ", ID);
+}else{
+    console.log("No se encontro el producto con ID" , ID);
+}
 
 }
 
+//cierre
+
 //logica del chat
-socket.on('new-message' , (data) => {
-    renderMessages(data)
+socket.on('msgs' , (data) => {
+    //recibo el array de mensajes y renderizo por cada mensaje un elemento
+    renderMessages(data);
 })
 
 const sendMessage = (e) => {
+    //funcion que recibe los mensajes escritos y la vista chat
     const message = {
         user:document.getElementById('username').value,
         text: document.getElementById('text').value
     } 
 
-    console.log("hola");
     console.log(message);
     
-
+    //emite el mensaje generado
     socket.emit('new-message' , message);
     return false;
 }
 
 function renderMessages(data){
     const html = data.map(elem => {
-        return(`
-        <div>
-        <strong> ${elem.user} </strong>
-        <em> ${elem.text} </em>
-         
-        </div>
-        
+        return (`
+          <div>
+            <strong> ${elem.user} </strong>
+            <em> ${elem.text} </em>
+          </div>
         `)
-    }).join('')
+  }).join(' ')
 
-    document.getElementById('caja').innerHTML = html
+  document.getElementById('caja').innerHTML = html
+
+
 } 

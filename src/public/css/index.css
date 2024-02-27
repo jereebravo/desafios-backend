@@ -17,4 +17,6 @@
 
 #caja{
     width: 100vh;
+    padding: 20px;
+    height: 50vh;
 }

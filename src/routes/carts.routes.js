@@ -2,12 +2,12 @@ const express = require('express');
 const { Router } = express;
 const routerCart = new Router();
 
-const cartManager = require('../dao/FileSystem/models/cart');
+const cartManager = require('../dao/db/cartManagerMongo');
 const cart = new cartManager();
 
 routerCart.post('/' , async (req , res) =>{
     try{
-        const conf = await cart.createCart();
+        const conf = await cart.createCart({});
         if(conf){
             
         res.status(201).send('Carrito creado correctamente');
@@ -42,18 +42,36 @@ routerCart.get('/:cid' , async (req , res) =>{
     }
 })
 
-routerCart.post('/:cid/product/:pid' , async (req , res) => {
+routerCart.post('/:cid/products/:pid' , async (req , res) => {
     const cartId = req.params.cid;
-    const prodId = parseInt(req.params.pid);
+    const prodId = req.params.pid;
 
     try{
-        const addProductCart = await cart.addProducCart(cartId , prodId);
+        const addProductCart = await cart.addProdCart(cartId , prodId);
 
         if(addProductCart){
             res.status(200).send(`Se agrego el producto con id: ${prodId} , al carrito con id: ${cartId} `)
         }else{
             res.status(400).send('No se pudo agregar el producto al carrito');
 
+        }
+
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
+routerCart.delete('/:cid' , async (req , res) => {
+    const cartId = req.params.cid;
+    try{
+        const eliminarCarrito = cart.deleteCart(cartId);
+
+        if(eliminarCarrito){
+            res.status(200).send(`El carrito con id: ${cartId} se elimino correctamente`)
+        }
+        else{
+            res.status(400).send("No se pudo eliminar el carrito");
         }
 
     }

@@ -17,9 +17,10 @@ const Database = require('./dao/db/index')
 
 
 //importo mis rutas 
-const { routerProd, socketProducts } = require('./routes/products.routes');
+const routerProd = require('./routes/products.routes');
 const routerCart = require('./routes/carts.routes');
-const {routerChat, socketChat} = require('./routes/chat.routes');
+const routerChat = require('./routes/chat.routes');
+const {routerView , initializeSocketIo} = require('./routes/view.routes');
 
 
 
@@ -35,36 +36,41 @@ app.set('views' , __dirname+'/views');
 
 const port = 8080 || process.env.PORT;
 
+//utilizo initializeSocketIo para poder exportar io a mi ruta views
+initializeSocketIo(io);
+
 app.use(express.json());
+//middleware para poder usar io en cualquier parte de la aplicacion
+app.use((req , res , next) => {
+    req.io = io;
+    return next();
+});
+
+
 
 //Routes de los Productos
 app.use('/api/products' , routerProd);
 //Routes de los carts
 app.use('/api/carts' , routerCart);
 //routes del chat
-app.use('/chat' , routerChat)
+app.use('/chats' , routerChat);
+//routes views
+app.use('/views' , routerView);
 
 
+io.on('connection', (socket) => {
+    console.log('a user connected');
 
-
-
-io.on('connection' , async (socket) => {
-    console.log('user conectado')
-    socket.on('message' , (data) =>{
-        console.log(data);
-    })
-  
-   
-})
+  });
 
 server.listen(port, ()=> {
     console.log('server run on port 8080');
     Database.connect()
 })
 
-//uso el appset para poder usar el socket en mis rutas
-socketProducts(io);
-socketChat(io);
+
+
+
 
 
 
