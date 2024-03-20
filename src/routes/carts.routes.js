@@ -80,4 +80,25 @@ routerCart.delete('/:cid' , async (req , res) => {
     }
 })
 
+routerCart.delete('/:cid/products/:pid' , async (req , res) => {
+    const cartId = req.params.cid;
+    const prodId = req.params.pid;
+
+    try{
+        const deleteProduct = cart.deleteProdCart(cartId , prodId);
+
+        if(deleteProduct){
+            res.status(200).send(`El producto con id: ${prodId} fue eliminado exitosamente del carrito con id: ${cartId}`);
+        }
+        else{
+            res.status(400).send('No se pudo eliminar el carrito');
+        }
+
+    }
+    catch(err){
+        console.log(err);
+
+    }
+})
+
 module.exports = routerCart;
