@@ -3,6 +3,7 @@ const { Router } = express;
 const mongoose = require('mongoose');
 const ProductMongoManager = require('../dao/db/ProductMongoManager');
 const chatManager = require('../dao/db/chatManager');
+const productModel = require('../dao/db/models/products.model');
 
 const product = new ProductMongoManager();
 const chat = new chatManager();
@@ -15,8 +16,8 @@ const routerView = new Router();
 
 routerView.get('/home', async (req, res)=>{
     try{
-        const productos = await product.getProducts()
-
+        const productos = await product.getProducts();
+        
         res.render('home', { productos });
     }
     catch(err){

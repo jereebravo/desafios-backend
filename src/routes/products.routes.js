@@ -10,6 +10,7 @@ const products = new ProductManager();
 */
 
 const ProductManagerMongo = require('../dao/db/ProductMongoManager')
+const ProductModel = require('../dao/db/models/products.model');
 
 
 
@@ -21,28 +22,82 @@ const product = new ProductManagerMongo;
 
 
 
-
-
-
 routerProd.get('/' , async (req , res) => {
     try{
         const prods = await product.getProducts();
-        const limit = req.query.limit;
-        const LimitPrds = prods.slice(0 , limit);
-        if(limit){
-            req.io.emit("allProdsLimit" , LimitPrds);
-            res.status(200).send({
-                msg: "Productos",
-                data: LimitPrds
-            }
-               
-        )}else{
-            req.io.emit("allProds" ,  prods);
-            res.send({
-                msg: "Todos los Productos",
-                data: prods
-           });
+        //Query para el limite de productos, si no recibe nada muestra 10
+        const limit = req.query.limit || 10;
+        //Query para las paginas, si no recibe nada por defecto es 1
+        const page = req.query.page || 1;
+        //Query que puede recibir caulquier categoria correspondiente a los productos
+        const category = req.query.category;
+        //Query para ordenar por precio, puede recibir asc o desc
+        const sort = req.query.sort;
+
+        //Configuro las diferentes propiedades que va a usar mi paginacion.
+        const options = {
+            page: page,
+            limit: limit,
+            sort: sort ? {price: req.query.sort} : undefined
         }
+
+        
+
+
+        if(category === "tecnologia" || category === "peluches" || category === "juguetes"){
+            //Si recibe alguna categoria hace lo siguiente:
+
+           const mensaje = `Productos de ${category}`;
+
+            const prodsCategory = await ProductModel.paginate({category: category} , options);
+            const response = {
+                status:"success",
+                payload: prodsCategory.docs,
+                totalPages: prodsCategory.totalPages,
+                prevPage: prodsCategory.prevPage,
+                nextPage: prodsCategory.nextPage,
+                page: page,
+                hasPrevPage: prodsCategory.hasPrevPage,
+                hasNextPage: prodsCategory.hasNextPage,
+                prevLink: prodsCategory.hasPrevPage ? "http://localhost:8080/api/products/" : false,
+                nextLink: prodsCategory.hasNextPage ? "http://localhost:8080/api/products/" : false
+    
+            }
+            res.status(200).send({
+                msg: mensaje ,
+                data: response
+
+            })
+            
+
+        }
+        else{
+            //Si no recibe ninguna categoria, muestra todos los productos de la base de datos
+            
+            const prods = await ProductModel.paginate({} , options);
+            const response = {
+                status:"success",
+                payload: prods.docs,
+                totalPages: prods.totalPages,
+                prevPage: prods.prevPage,
+                nextPage: prods.nextPage,
+                page: page,
+                hasPrevPage: prods.hasPrevPage,
+                hasNextPage: prods.hasNextPage,
+                prevLink: prods.hasPrevPage ? `http://localhost:8080/api/products/?page=${page - 1} `: false,
+                nextLink: prods.hasNextPage ? `http://localhost:8080/api/products/?page=${page + 1}` : false
+    
+            }
+
+            
+            res.status(200).send({
+                msg:"Productos",
+                data: response
+
+            })
+
+        }
+
     }catch(err){
         console.log(err);
         res.status(500).send('Error en el servidor');
