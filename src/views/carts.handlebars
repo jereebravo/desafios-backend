@@ -1,0 +1,15 @@
+<h1>Carrito:<p>{{carrito}}</p></h1>
+{{#each prodsInCart}}
+  <div class="card m-3" style="width: 18rem;">
+    <div class="card-body">
+       <li class="list-group-item"> <h1 class="card-title fs-3">TITLE:</h1> <p class="card-text">{{this.productId.title}}</p></li>
+       <li class="list-group-item"><h2 class="card-subtitle mb-2 text-body-secondary fs-3">ID:</h2> <p class="card-text">{{this.productId._id}}</p></li>
+       <li class="list-group-item"><h2 class="card-subtitle mb-2 text-body-secondary fs-3">Descripcion:</h2> <p class="card-text">{{this.productId.description}}</p></li>
+       <li class="list-group-item"><h2 class="card-subtitle mb-2 text-body-secondary fs-3">Code:</h2> <p class="card-text">{{this.productId.code}}</p></li>
+       <li class="list-group-item"><h2 class="card-subtitle mb-2 text-body-secondary fs-3">Precio:</h2> <p class="card-text">{{this.productId.price}}</p></li>
+       <li class="list-group-item"><h2 class="card-subtitle mb-2 text-body-secondary fs-3">Status:</h2> <p class="card-text">{{this.productId.status}}</p></li>
+       <li class="list-group-item"><h2 class="card-subtitle mb-2 text-body-secondary fs-3">Categoria:</h2> <p class="card-text">{{this.productId.category}}</p></li>
+  </div>
+ 
+  </div>
+{{/each}}

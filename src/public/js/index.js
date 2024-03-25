@@ -101,3 +101,6 @@ function renderMessages(data){
 
 
 } 
+
+
+//logica de view productos

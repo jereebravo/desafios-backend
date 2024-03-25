@@ -6,7 +6,7 @@ product: [
   {
     productId: {
       type: Schema.Types.ObjectId,
-      ref: 'Product',
+      ref: 'Products',
     },
     amount: {
       type: Number,
@@ -19,6 +19,9 @@ product: [
   
 })
 
+
+
 const Cart = mongoose.model('Carts' , cartSchema);
+
 
 module.exports = Cart;

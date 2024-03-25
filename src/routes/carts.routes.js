@@ -28,6 +28,7 @@ routerCart.get('/:cid' , async (req , res) =>{
     const cartId = req.params.cid;
     try{
         const productsInCart = await cart.showProdsCart(cartId);
+        console.log(productsInCart);
 
         if(productsInCart !== null){
             res.status(200).send(productsInCart);
@@ -59,6 +60,27 @@ routerCart.post('/:cid/products/:pid' , async (req , res) => {
     }
     catch(err){
         console.log(err);
+    }
+})
+
+routerCart.put('/:cid/products/:pid' , async (req , res) => {
+    const cartId = req.params.cid;
+    const prodId = req.params.pid;
+    const quantity = req.body.quantity;
+
+    try{
+        const addQuantity = await cart.addProdQuantity(cartId , prodId , quantity);
+
+        if(addQuantity){
+            res.status(200).send(`Se agregaron ${quantity} productos de ${prodId} al carrito ${cartId}`)
+        }
+        else{
+            res.status(400).send('Error al agregar el producto');
+        }
+
+    }
+    catch(err){
+
     }
 })
 

@@ -3,10 +3,12 @@ const { Router } = express;
 const mongoose = require('mongoose');
 const ProductMongoManager = require('../dao/db/ProductMongoManager');
 const chatManager = require('../dao/db/chatManager');
+const cartManager = require('../dao/db/cartManagerMongo');
 const productModel = require('../dao/db/models/products.model');
 
 const product = new ProductMongoManager();
 const chat = new chatManager();
+const cart = new cartManager();
 
 const routerView = new Router();
 
@@ -54,6 +56,45 @@ routerView.get('/home', async (req, res)=>{
 
     }
   })
+
+  routerView.get('/products' , async(req , res) =>{
+    const page = req.query.page || 1;
+    const prods = await productModel.paginate({}, { limit: 10, page: page});
+
+
+    try{
+      const prodsDocs = prods.docs.map(doc => doc.toObject({ getters: true }));
+      res.render('productos' , {
+        prodsDocs , 
+        currentpage: page , 
+        hasNextPage: prods.hasNextPage , 
+        hasPrevPage: prods.hasPrevPage});
+
+    }
+    catch(err){
+
+    }
+
+  })
+
+  routerView.get('/carts/:cid',  async(req , res) =>{
+    const carrito = req.params.cid;
+    const prodsCart = await cart.showProdsCart(carrito);
+    const prodsInCart = prodsCart.product.map(doc => doc.toObject({getters: true}));
+    try{
+      console.log(prodsInCart);
+      res.render('carts' , {prodsInCart , carrito});
+
+
+    }
+    catch(err){
+
+    }
+  })
+
+
+
+
   const initializeSocketIo = (io) => {
     io.on('connection' , async (socket) => {
        //hago esta logica del id, para subir los mensajes al chat creado especifico guardado en mongo.

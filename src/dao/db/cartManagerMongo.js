@@ -49,8 +49,34 @@ class cartManager {
     }
   };
 
+  addProdQuantity = async (cartId , prodId , quantity) => {
+    try{
+      const existingCart = await cart.findById(cartId);
+      const ExistingProduct = existingCart.product.findIndex((prod) =>
+        prod.productId.equals(prodId));
+
+        if(ExistingProduct !== -1){
+          existingCart.product[ExistingProduct].amount += quantity;
+          console.log(`Se agregaron ${quantity} productos de ${prodId} al carrito ${cartId}`);
+
+          await existingCart.save()
+          return true
+
+        }
+        else{
+          console.log("No se pudieron agregar los productos");
+          return false
+        }
+
+    }
+    catch(err){
+      console.log(err);
+
+    }
+  }
+
   showProdsCart = async (cartId) => {
-    const existingCart = cart.findById(cartId);
+    const existingCart = cart.findById(cartId).populate("product.productId");
 
     if (existingCart) {
       return existingCart;
@@ -72,11 +98,13 @@ class cartManager {
         if (prodCartIndex !== -1) {
           //si findIndex encuentra el producto, le eliminamos uno al mismo.
           existingCart.product[prodCartIndex].amount -= 1;
+          console.log("Se elimino un producto")
           
 
           if (existingCart.product[prodCartIndex].amount === 0) {
             //si el producto va a llegar a amount = 0, eliminamos al mismo del carrito.
             existingCart.product.splice(prodCartIndex, 1);
+            console.log("Se elimino un producto del carrito");
             return true
       
           }

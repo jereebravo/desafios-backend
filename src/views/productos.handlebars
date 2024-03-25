@@ -1,0 +1,26 @@
+<h1>Productos de db</h1>
+<div id="listaProducts">
+    <ul class="list-group">
+  {{#each prodsDocs}}
+  <div class="card m-3" style="width: 18rem;">
+    <div class="card-body">
+       <li class="list-group-item"> <h1 class="card-title fs-3">TITLE:</h1> <p class="card-text">{{title}}</p></li>
+       <li class="list-group-item"><h2 class="card-subtitle mb-2 text-body-secondary fs-3">ID:</h2> <p class="card-text">{{_id}}</p></li>
+       <button type="button" class="btn btn-secondary mt-2">Agregar al carrito</button>
+  </div>
+ 
+  </div>
+  
+  {{/each}}
+  <div id="containerPage">
+   
+    <button class="button" ><a href="http://localhost:8080/views/products/?page=1">Back</a></button>
+     
+    <button class="button"><a href="http://localhost:8080/views/products/?page=2">Next</a></button>
+    
+   
+  </div>
+</ul>
+</div>
+
+
